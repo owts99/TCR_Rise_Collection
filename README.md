@@ -52,7 +52,7 @@ python -m http.server 8000
 ## 檔案結構
 
 ```text
-tc_units_zh/
+TCR_Rise_Collection/
 ├─ README.md                     # 本文件
 ├─ commander.html                # 指揮官狀態頁
 ├─ index.html                    # 單位資料庫首頁（已加入導覽）

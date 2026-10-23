@@ -355,6 +355,35 @@ a:hover {
   min-width: 0;
 }
 
+.troop-types {
+  margin-bottom: 4px;
+}
+
+.troop-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.troop-icon {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  color: #4a463e;
+  opacity: 0.85;
+}
+
+.workforce-points {
+  margin: 0 0 12px;
+}
+
+.workforce-points .static-field {
+  font: 600 14px/1.2 var(--mono);
+  color: var(--ink);
+  justify-content: center;
+}
+
 .field > label,
 .field-caption {
   display: flex;

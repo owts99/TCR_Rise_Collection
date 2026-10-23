@@ -39,6 +39,84 @@
             <input id="commander-name" data-bind="name" type="text" maxlength="32" autocomplete="off" spellcheck="false">
           </div>
 
+          <div class="section-rule"><span>兵種等級</span></div>
+
+          <div class="attributes troop-types">
+            <div class="field">
+              <label for="infantry" title="兵種等級（Designer: Infantry）">
+                <span class="troop-label">
+                  <svg class="troop-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 1.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-3.2 5.2h6.4c.9 0 1.6.7 1.6 1.6v1.2H3.2V8.3c0-.9.7-1.6 1.6-1.6zm-.5 3.6h7.4v3.2H4.3z"/></svg>
+                  步兵
+                </span>
+                <span class="en">Infantry</span>
+              </label>
+              <div class="stepper">
+                <button class="step-button" type="button" data-field="infantry" data-delta="-1" aria-label="減少步兵等級">−</button>
+                <input id="infantry" data-bind="infantry" type="number" inputmode="numeric" min="1" max="100" step="1">
+                <button class="step-button" type="button" data-field="infantry" data-delta="1" aria-label="增加步兵等級">+</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="mech" title="兵種等級（Designer: Mobile；遊戲 UI 常稱坦克）">
+                <span class="troop-label">
+                  <svg class="troop-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M2 10.5h1.2l.8-2.2h7.5l1.1 2.2H14v1.2H2zm2.2-3.5 1-2.3h5.2l1 2.3zm1.3 4.8a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2zm5 0a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2z"/></svg>
+                  機械
+                </span>
+                <span class="en">Mobile</span>
+              </label>
+              <div class="stepper">
+                <button class="step-button" type="button" data-field="mech" data-delta="-1" aria-label="減少機械等級">−</button>
+                <input id="mech" data-bind="mech" type="number" inputmode="numeric" min="1" max="100" step="1">
+                <button class="step-button" type="button" data-field="mech" data-delta="1" aria-label="增加機械等級">+</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="air" title="兵種等級（Designer: Aviation）">
+                <span class="troop-label">
+                  <svg class="troop-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 2.2 9.2 6H14l-3.2 2.2L12 12.5 8 10.2 4 12.5l1.2-4.3L2 6h4.8z"/></svg>
+                  飛行
+                </span>
+                <span class="en">Aviation</span>
+              </label>
+              <div class="stepper">
+                <button class="step-button" type="button" data-field="air" data-delta="-1" aria-label="減少飛行等級">−</button>
+                <input id="air" data-bind="air" type="number" inputmode="numeric" min="1" max="100" step="1">
+                <button class="step-button" type="button" data-field="air" data-delta="1" aria-label="增加飛行等級">+</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="special" title="兵種等級（Designer: Organic）">
+                <span class="troop-label">
+                  <svg class="troop-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 1.8c2.2 0 4 1.5 4 3.4 0 1.2-.7 2.2-1.8 2.8L11.5 14H4.5l1.3-6c-1.1-.6-1.8-1.6-1.8-2.8 0-1.9 1.8-3.4 4-3.4zm0 1.4c-1.3 0-2.4.8-2.4 2s1.1 2 2.4 2 2.4-.8 2.4-2-1.1-2-2.4-2z"/></svg>
+                  特殊
+                </span>
+                <span class="en">Organic</span>
+              </label>
+              <div class="stepper">
+                <button class="step-button" type="button" data-field="special" data-delta="-1" aria-label="減少特殊等級">−</button>
+                <input id="special" data-bind="special" type="number" inputmode="numeric" min="1" max="100" step="1">
+                <button class="step-button" type="button" data-field="special" data-delta="1" aria-label="增加特殊等級">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-rule"><span>能力點數</span></div>
+
+          <div class="attributes workforce-points">
+            <div class="field">
+              <label for="workforce_points" title="（未使用 + 追加）+ 四屬性">全部點數 <span class="en">All Points</span></label>
+              <output id="workforce_points" class="static-field" data-output="workforcePoints" aria-label="全部點數">—</output>
+            </div>
+
+            <div class="field">
+              <label for="unused_points" title="未使用 + 追加（兵種等級 +1 → 追加 +1 → 此值 +1）">未使用點數 <span class="en">Unused</span></label>
+              <output id="unused_points" class="static-field" data-output="availablePoints" aria-label="未使用點數">—</output>
+            </div>
+          </div>
+
           <div class="attributes">
             <div class="field">
               <label for="strategy" title="B 規則稱「戰術能力」">戰略 <span class="en">Strategy</span></label>

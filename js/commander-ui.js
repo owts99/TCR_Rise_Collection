@@ -4,11 +4,16 @@
   const {
     DEFAULT_INPUT,
     FIELD_LIMITS,
+    UNUSED_POOL_FIELDS,
     UNIT_PRESETS,
     MAX_DEPLOYED_UNITS,
     calculate,
+    setUnusedPoolValue,
+    adjustUnusedPool,
     roundTo,
   } = globalThis.CommanderCore;
+
+  const UNUSED_POOL_FIELD_SET = new Set(UNUSED_POOL_FIELDS);
 
   const state = { ...DEFAULT_INPUT };
 
@@ -233,6 +238,8 @@ function render() {
   setOutput('unitCategory', unit.category);
   setOutput('unitType', unit.type);
 
+  setOutput('workforcePoints', formatInteger(result.workforcePoints));
+  setOutput('availablePoints', formatInteger(result.availablePoints));
   setOutput('techLevel', String(result.tech.level));
   setOutput('upgradeIndex', String(result.upgradeIndex));
   setOutput('weightFactor', formatFactor(result.weight.factor));
@@ -323,6 +330,14 @@ function bindInputs() {
 
       const value = parseNumericInput(element);
       if (value === null) return;
+
+      if (UNUSED_POOL_FIELD_SET.has(key)) {
+        Object.assign(state, setUnusedPoolValue(state, key, value));
+        syncInputs();
+        render();
+        return;
+      }
+
       state[key] = value;
 
       if (key === 'baseHp' || key === 'baseWeight' || key === 'baseSpace') {
@@ -349,6 +364,13 @@ function bindSteppers() {
       const delta = Number(button.dataset.delta);
       const limits = FIELD_LIMITS[field];
       if (!limits || !Number.isFinite(delta)) return;
+
+      if (UNUSED_POOL_FIELD_SET.has(field)) {
+        Object.assign(state, adjustUnusedPool(state, field, delta));
+        syncInputs();
+        render();
+        return;
+      }
 
       const normalized = calculate(state).input;
       let value = normalized[field] + delta;
@@ -402,10 +424,18 @@ function currentPayload() {
   return {
     commander: {
       name: result.input.name,
+      infantry: result.input.infantry,
+      mech: result.input.mech,
+      air: result.input.air,
+      special: result.input.special,
+      unusedPoints: result.unusedPoints,
+      additionPoints: result.additionPoints,
+      availablePoints: result.availablePoints,
       strategy: result.input.strategy,
       politics: result.input.politics,
       knowledge: result.input.knowledge,
       technology: result.input.technology,
+      workforcePoints: result.workforcePoints,
     },
     unit: {
       presetId: result.input.unitPresetId,

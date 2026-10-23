@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>神影特攻 / Tactical Commanders 單位資料庫（繁體中文整理）</title>
+<style>
+body { font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif; margin: 0; background: #111; color: #eee; }
+header { background: #1a1a2e; padding: 20px; text-align: center; border-bottom: 3px solid #4a90d9; }
+h1 { margin: 0; color: #4a90d9; }
+.nav { background: #16213e; padding: 10px; text-align: center; }
+.nav a { color: #4a90d9; margin: 0 15px; text-decoration: none; font-weight: bold; }
+.nav a:hover { text-decoration: underline; }
+.section { padding: 30px; max-width: 1200px; margin: 0 auto; }
+.section h2 { color: #4a90d9; border-bottom: 2px solid #4a90d9; padding-bottom: 8px; }
+.grid-img { max-width: 100%; height: auto; border: 1px solid #333; margin: 15px 0; border-radius: 8px; }
+table { width: 100%; border-collapse: collapse; margin: 20px 0; background: #1a1a1a; }
+th, td { border: 1px solid #333; padding: 8px 10px; text-align: left; font-size: 14px; }
+th { background: #16213e; color: #4a90d9; }
+tr:nth-child(even) { background: #222; }
+.note { background: #1e2a3a; padding: 15px; border-left: 4px solid #4a90d9; margin: 15px 0; font-size: 14px; }
+footer { text-align: center; padding: 20px; background: #0f0f1a; color: #666; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>神影特攻 / Tactical Commanders 單位資料庫</h1>
+  <p>繁體中文整理版（資料來源：Ever☆Zone Tistory）</p>
+</header>
+
+<div class="nav">
+  <a href="#infantry">步兵系</a>
+  <a href="#mech">機械系</a>
+  <a href="#air">飛行系</a>
+  <a href="#special">特殊系</a>
+  <a href="#notes">補充說明</a>
+  <a href="./commander.html">指揮官狀態</a>
+</div>
+
+<div class="section" id="infantry">
+  <h2>步兵系</h2>
+  <img src="./images/infantry_grid.png" alt="步兵系單位圖" class="grid-img">
+  <table>
+    <tr><th>單位</th><th>基礎HP</th><th>裝甲</th><th>速度</th><th>空間</th><th>重量</th><th>升級來源</th><th>特殊能力</th></tr>
+    <tr><td><a href="units/humanoid.html">Humanoid（戰猿）</a></td><td>1400</td><td>0</td><td>2.4 m/s</td><td>70</td><td>70</td><td>-</td><td>隱形、安瓿、懸浮、偽裝、電擊等</td></tr>
+    <tr><td><a href="units/bazonoid.html">Bazonoid（巴茲尼德）</a></td><td>2000</td><td>10</td><td>2.6 m/s</td><td>80</td><td>90</td><td>Humanoid 47</td><td>隱形、安瓿、懸浮</td></tr>
+    <tr><td><a href="units/railgunner.html">Railgunner（榴彈兵）</a></td><td>1800</td><td>1</td><td>3.0 m/s</td><td>80</td><td>80</td><td>Humanoid 47</td><td>隱形、手榴彈、EMP手榴彈等</td></tr>
+    <tr><td><a href="units/gta.html">GTA Rocket Launcher</a></td><td>1300</td><td>5</td><td>1.6 m/s</td><td>90</td><td>90</td><td>-</td><td>隱形、掃蕩觀測器、ICBM等</td></tr>
+    <tr><td><a href="units/shark.html">Shark（虎鯊）</a></td><td>1650</td><td>8</td><td>2.2 m/s</td><td>90</td><td>100</td><td>GTA 50</td><td>隱形、地毯浮游、PATRIOT</td></tr>
+    <tr><td><a href="units/goliath.html">Goliath（哥利亞）</a></td><td>1600</td><td>8</td><td>3.3 m/s</td><td>100</td><td>100</td><td>GTA 50</td><td>隱形、奴役、星柱</td></tr>
+    <tr><td><a href="units/twin_vulcan.html">Twin Vulcan（雙管巴爾幹）</a></td><td>1600</td><td>0</td><td>4.0 m/s</td><td>80</td><td>80</td><td>-</td><td>隱形、EMP槍、EMP波、EMP鉛槍</td></tr>
+    <tr><td><a href="units/exonoid.html">Exonoid（艾克斯諾）</a></td><td>2000</td><td>5</td><td>3.2 m/s</td><td>90</td><td>100</td><td>Twin Vulcan 40</td><td>隱形、安瓿、懸浮</td></tr>
+    <tr><td><a href="units/tilanoid.html">Tilanoid（鈦拉諾）</a></td><td>2000</td><td>10</td><td>1.4 m/s</td><td>90</td><td>110</td><td>Twin Vulcan 40</td><td>機械強化、巨大傳送、量子時鐘等</td></tr>
+    <tr><td><a href="units/giant.html">Giant（巨人）</a></td><td>2000</td><td>12</td><td>3.6 m/s</td><td>150</td><td>150</td><td>-</td><td>重型隱形、地震、火焰地震等</td></tr>
+    <tr><td><a href="units/blader.html">Blader（刀鋒者）</a></td><td>1600</td><td>8</td><td>7.5 m/s</td><td>90</td><td>90</td><td>Giant 45</td><td>隱形、安瓿、懸浮</td></tr>
+    <tr><td><a href="units/phantom.html">Phantom（魅影）</a></td><td>1050</td><td>0</td><td>4.8 m/s</td><td>70</td><td>70</td><td>-</td><td>隱形、星殼、月亮殼等</td></tr>
+    <tr><td><a href="units/sniper.html">Sniper（狙擊手）</a></td><td>600</td><td>0</td><td>3.0 m/s</td><td>75</td><td>75</td><td>Phantom 45</td><td>時鐘-EF、狙擊模式</td></tr>
+  </table>
+</div>
+
+<div class="section" id="mech">
+  <h2>機械系</h2>
+  <img src="./images/mech_grid.png" alt="機械系單位圖" class="grid-img">
+  <table>
+    <tr><th>單位</th><th>基礎HP</th><th>裝甲</th><th>速度</th><th>空間</th><th>重量</th><th>升級來源</th><th>特殊能力</th></tr>
+    <tr><td><a href="units/light_cannon.html">Light Cannon Tank（輕炮車）</a></td><td>1950</td><td>10</td><td>3.0 m/s</td><td>160</td><td>200</td><td>-</td><td>隱形、手榴彈、資源貨櫃</td></tr>
+    <tr><td><a href="units/medium_tank.html">Medium Tank（中戰車）</a></td><td>2400</td><td>20</td><td>1.6 m/s</td><td>240</td><td>300</td><td>Light Cannon 30</td><td>能源轉移、終極屏障、資源貨櫃</td></tr>
+    <tr><td><a href="units/heavy_tank.html">Heavy Tank（重戰車）</a></td><td>2900</td><td>30</td><td>1.4 m/s</td><td>260</td><td>320</td><td>Light Cannon 30</td><td>重型能源轉移</td></tr>
+    <tr><td><a href="units/light_bike.html">Light Bike（輕型摩托）</a></td><td>1200</td><td>8</td><td>8.0 m/s</td><td>160</td><td>160</td><td>-</td><td>能源轉移、加速器、資源貨櫃</td></tr>
+    <tr><td><a href="units/hover_raid.html">Hover Raid（戰艦控甲者）</a></td><td>1200</td><td>0</td><td>6.8 m/s</td><td>160</td><td>160</td><td>Light Bike 45</td><td>能源轉移、時鐘拳</td></tr>
+    <tr><td><a href="units/artillery.html">Artillery（自走砲）</a></td><td>1300</td><td>1</td><td>1.0 m/s</td><td>160</td><td>180</td><td>-</td><td>野砲模式</td></tr>
+    <tr><td><a href="units/thor.html">Thor（突岩）</a></td><td>1300</td><td>1</td><td>1.0 m/s</td><td>160</td><td>160</td><td>Artillery 45</td><td>野砲模式</td></tr>
+    <tr><td><a href="units/duke.html">Duke（公爵）</a></td><td>1600</td><td>5</td><td>2.8 m/s</td><td>160</td><td>180</td><td>-</td><td>能源轉移、資源貨櫃、觀測器</td></tr>
+    <tr><td><a href="units/spooky_duke.html">Spooky Duke（幽靈公爵）</a></td><td>1500</td><td>3</td><td>6.9 m/s</td><td>160</td><td>180</td><td>Duke 45</td><td>能源轉移、資源貨櫃、觀測器</td></tr>
+  </table>
+  <div class="note">
+    <strong>Light Cannon Tank 重點：</strong>速度偏慢是硬傷（3.0 m/s，升級後約 3.6）。核心裝備為<strong>能源轉移</strong>（技術等級 28，能量消耗 85）：幫全隊單位補滿能量（1:1），自己不補。
+  </div>
+</div>
+
+<div class="section" id="air">
+  <h2>飛行系</h2>
+  <img src="./images/air_grid.png" alt="飛行系單位圖" class="grid-img">
+  <table>
+    <tr><th>單位</th><th>基礎HP</th><th>裝甲</th><th>速度</th><th>空間</th><th>重量</th><th>升級來源</th><th>特殊能力</th></tr>
+    <tr><td><a href="units/zanak.html">Zanak（占薩克）</a></td><td>1000</td><td>1</td><td>5.4 m/s</td><td>90</td><td>100</td><td>-</td><td>推進器、地毯轟炸類</td></tr>
+    <tr><td><a href="units/exorion.html">Exorion（艾洛比）</a></td><td>950</td><td>0</td><td>11.0 m/s</td><td>90</td><td>100</td><td>-</td><td>中子推進器、五重推進器</td></tr>
+    <tr><td><a href="units/elombre.html">Elombre（雷霆弩）</a></td><td>1000</td><td>1</td><td>4.5 m/s</td><td>90</td><td>100</td><td>Zanak 45</td><td>推進器</td></tr>
+    <tr><td><a href="units/aerofighter.html">Aerofighter（空戰機）</a></td><td>1300</td><td>2</td><td>5.4 m/s</td><td>90</td><td>100</td><td>Exorion 35</td><td>推進器、雙重觀測器</td></tr>
+    <tr><td><a href="units/orion.html">Orion（獵戶座）</a></td><td>1050</td><td>0</td><td>-</td><td>90</td><td>120</td><td>-</td><td>隱身、對空對地飛彈</td></tr>
+    <tr><td><a href="units/executor.html">Executor（空中判官）</a></td><td>1700</td><td>10</td><td>3.0 m/s</td><td>100</td><td>130</td><td>-</td><td>量子火焰</td></tr>
+    <tr><td><a href="units/felious.html">Felious（支援者）</a></td><td>1000</td><td>0</td><td>-</td><td>90</td><td>100</td><td>-</td><td>空中地雷</td></tr>
+    <tr><td><a href="units/jest.html">Jest（空中判官）</a></td><td>2350</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+    <tr><td><a href="units/dropship.html">Dropship（運輸船）</a></td><td>1000</td><td>0</td><td>-</td><td>110</td><td>100</td><td>-</td><td>運輸、心靈傳動</td></tr>
+  </table>
+  <div class="note">飛行系資料部分來自綜合整理，完整數值請參考原站個別頁面。</div>
+</div>
+
+<div class="section" id="special">
+  <h2>特殊系</h2>
+  <img src="./images/special_grid.png" alt="特殊系單位圖" class="grid-img">
+  <table>
+    <tr><th>單位</th><th>基礎HP</th><th>裝甲</th><th>速度</th><th>空間</th><th>重量</th><th>升級來源</th><th>特殊能力</th></tr>
+    <tr><td><a href="units/medic.html">Medic（醫療兵）</a></td><td>1150</td><td>0</td><td>3.6 m/s</td><td>60</td><td>70</td><td>-</td><td>治療包、精神錯亂</td></tr>
+    <tr><td><a href="units/repairer.html">Repairer（修理者）</a></td><td>1100</td><td>0</td><td>-</td><td>90</td><td>100</td><td>-</td><td>機械臂、修理工具</td></tr>
+    <tr><td><a href="units/heal_generator.html">Heal Generator（野戰醫院）</a></td><td>1300</td><td>4</td><td>2.2 m/s</td><td>240</td><td>300</td><td>Repairer / Medic 45</td><td>恢復模式</td></tr>
+    <tr><td><a href="units/bomb_squad.html">Bomb Squad（地雷兵）</a></td><td>1300</td><td>0</td><td>-</td><td>60</td><td>70</td><td>-</td><td>地雷、自爆裝置</td></tr>
+    <tr><td><a href="units/eclipse.html">Eclipse（日蝕）</a></td><td>1500</td><td>0</td><td>-</td><td>120</td><td>150</td><td>-</td><td>傳送門、護盾生成器</td></tr>
+    <tr><td><a href="units/ranger.html">Ranger（生化兵）</a></td><td>1500</td><td>8</td><td>4.8 m/s</td><td>160</td><td>180</td><td>Bomb Squad 40</td><td>體能下降、強制自爆</td></tr>
+    <tr><td><a href="units/radar_squad.html">Radar Squad（搜尋者）</a></td><td>1300</td><td>0</td><td>-</td><td>60</td><td>70</td><td>-</td><td>衛星追蹤、雷達干擾</td></tr>
+    <tr><td><a href="units/sweeper.html">Sweeper（安瓿）</a></td><td>1500</td><td>0</td><td>-</td><td>90</td><td>100</td><td>-</td><td>反隱形、反偽裝、反迷彩</td></tr>
+    <tr><td><a href="units/bunkernoid.html">Bunkernoid（碉堡車）</a></td><td>2000</td><td>12</td><td>3.2 m/s</td><td>240</td><td>300</td><td>-</td><td>碉堡模式</td></tr>
+  </table>
+  <p>特殊系單位頁面已全部建立。</p>
+</div>
+
+<div class="section" id="notes">
+  <h2>補充說明</h2>
+  <div class="note">
+    <ul>
+      <li>資料主要整理自 <a href="https://everzone.tistory.com/m/101" style="color:#4a90d9">Ever☆Zone Tistory</a> 單位規格頁。</li>
+      <li>單位圖示取自使用者提供的本地 TC 資料庫截圖。</li>
+      <li>EMP 相關裝備主要集中在步兵系的 Twin Vulcan（雙管巴爾幹）與 Railgunner（榴彈兵）。</li>
+      <li>機械系的核心支援裝備為「能源轉移」，而非 EMP。</li>
+      <li>後期主流為數量流（同時在場 8～12 隻）與極端屬性相剋，中等彈性單位使用率較低。</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  整理自公開資料與玩家回憶｜僅供參考，實際數值以遊戲為準
+</footer>
+
+</body>
+</html>

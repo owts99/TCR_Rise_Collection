@@ -22,10 +22,15 @@
 
   const DEFAULT_INPUT = Object.freeze({
     name: 'New Hero 0',
-    strategy: 30,
-    politics: 33,
-    knowledge: 22,
-    technology: 20,
+    infantry: 1,
+    mech: 1,
+    air: 1,
+    special: 1,
+    unusedPoints: 20,
+    strategy: 5,
+    politics: 5,
+    knowledge: 5,
+    technology: 5,
     unitLevel: 2,
     baseHp: 1200,
     baseWeight: 75,
@@ -54,6 +59,11 @@
   ]);
 
   const FIELD_LIMITS = Object.freeze({
+    infantry: { min: 1, max: 100 },
+    mech: { min: 1, max: 100 },
+    air: { min: 1, max: 100 },
+    special: { min: 1, max: 100 },
+    unusedPoints: { min: 0, max: 999 },
     strategy: { min: 0, max: 999 },
     politics: { min: 0, max: 999 },
     knowledge: { min: 0, max: 999 },
@@ -66,6 +76,22 @@
     returns: { min: 0, max: 12 },
     opponentPolitics: { min: 0, max: 999 },
   });
+
+  /** 四項能力（戰略／政治／知識／技術）：加減時與 unusedPoints 互換。 */
+  const ATTR_POOL_FIELDS = Object.freeze(['strategy', 'politics', 'knowledge', 'technology']);
+
+  /**
+   * 兵種等級（Designer: Infantry / Mobile / Aviation / Organic）。
+   * 獨立加減，只影響 additionPoints（不扣 unused）。
+   * 注意：Mobile＝機械系等級；Mech Apt＝技術「能力」，兩者不同。
+   */
+  const TROOP_POOL_FIELDS = Object.freeze(['infantry', 'mech', 'air', 'special']);
+
+  /** 未使用點數池：僅四項「能力」（戰略／政治／知識／技術）。 */
+  const UNUSED_POOL_FIELDS = Object.freeze([...ATTR_POOL_FIELDS]);
+
+  /** 四系兵種等級最低各 1，加總基底 4；超過的部分才算追加點數。 */
+  const TROOP_BASE_SUM = 4;
 
   const MAX_RETURNS = 12;
   const BASE_HOLDING_CAP = 48;
@@ -101,6 +127,15 @@
 
     return {
       name: String(merged.name ?? '').trim().slice(0, 32) || DEFAULT_INPUT.name,
+      infantry: normalizeInteger(merged.infantry, DEFAULT_INPUT.infantry, FIELD_LIMITS.infantry),
+      mech: normalizeInteger(merged.mech, DEFAULT_INPUT.mech, FIELD_LIMITS.mech),
+      air: normalizeInteger(merged.air, DEFAULT_INPUT.air, FIELD_LIMITS.air),
+      special: normalizeInteger(merged.special, DEFAULT_INPUT.special, FIELD_LIMITS.special),
+      unusedPoints: normalizeInteger(
+        merged.unusedPoints,
+        DEFAULT_INPUT.unusedPoints,
+        FIELD_LIMITS.unusedPoints,
+      ),
       strategy: normalizeInteger(merged.strategy, DEFAULT_INPUT.strategy, FIELD_LIMITS.strategy),
       politics: normalizeInteger(merged.politics, DEFAULT_INPUT.politics, FIELD_LIMITS.politics),
       knowledge: normalizeInteger(merged.knowledge, DEFAULT_INPUT.knowledge, FIELD_LIMITS.knowledge),
@@ -123,6 +158,88 @@
       ),
       unitPresetId: String(merged.unitPresetId ?? DEFAULT_INPUT.unitPresetId),
     };
+  }
+
+  function allocatedAttrPoints(input) {
+    return input.strategy + input.politics + input.knowledge + input.technology;
+  }
+
+  function troopTypeSum(input) {
+    return input.infantry + input.mech + input.air + input.special;
+  }
+
+  /** 四系兵種等級加總 − 4（每系基底 1）。 */
+  function additionPoints(input) {
+    return troopTypeSum(input) - TROOP_BASE_SUM;
+  }
+
+  /** 未使用 + 追加；兵種等級 +1 → addition +1 → available +1（unused 不變）。 */
+  function availablePoints(input) {
+    return input.unusedPoints + additionPoints(input);
+  }
+
+  /** 全部點數 = (未使用 + 追加) + 四項能力。 */
+  function totalWorkforcePoints(input) {
+    return availablePoints(input) + allocatedAttrPoints(input);
+  }
+
+  /**
+   * 調整未使用點數池（僅四項能力：戰略／政治／知識／技術）：
+   * 花費從 unusedPoints 扣，退回則加回。
+   * 未使用點數不足時，+ 只能加到負擔得起的上限。
+   */
+  function setUnusedPoolValue(rawInput, field, nextValue) {
+    if (!UNUSED_POOL_FIELDS.includes(field)) {
+      throw new Error(`setUnusedPoolValue: ${field} 不是未使用點數池欄位`);
+    }
+
+    const input = normalizeInput(rawInput);
+    const limits = FIELD_LIMITS[field];
+    let next = normalizeInteger(nextValue, input[field], limits);
+    const maxAffordable = input[field] + input.unusedPoints;
+    next = Math.min(next, maxAffordable);
+
+    const spent = next - input[field];
+    return {
+      ...input,
+      [field]: next,
+      unusedPoints: input.unusedPoints - spent,
+    };
+  }
+
+  function adjustUnusedPool(rawInput, field, delta) {
+    const input = normalizeInput(rawInput);
+    return setUnusedPoolValue(rawInput, field, input[field] + delta);
+  }
+
+  function setAttrPoolValue(rawInput, field, nextValue) {
+    if (!ATTR_POOL_FIELDS.includes(field)) {
+      throw new Error(`setAttrPoolValue: ${field} 不是能力點數池欄位`);
+    }
+    return setUnusedPoolValue(rawInput, field, nextValue);
+  }
+
+  function adjustAttrPool(rawInput, field, delta) {
+    return adjustUnusedPool(rawInput, field, delta);
+  }
+
+  /** 兵種等級獨立調整：不扣 unusedPoints。 */
+  function setTroopPoolValue(rawInput, field, nextValue) {
+    if (!TROOP_POOL_FIELDS.includes(field)) {
+      throw new Error(`setTroopPoolValue: ${field} 不是兵種等級欄位`);
+    }
+
+    const input = normalizeInput(rawInput);
+    const next = normalizeInteger(nextValue, input[field], FIELD_LIMITS[field]);
+    return {
+      ...input,
+      [field]: next,
+    };
+  }
+
+  function adjustTroopPool(rawInput, field, delta) {
+    const input = normalizeInput(rawInput);
+    return setTroopPoolValue(rawInput, field, input[field] + delta);
   }
 
   /**
@@ -169,6 +286,9 @@
 
     const fieldPersonnel = 10 + Math.floor(input.strategy / 8);
     const deployedUnits = Math.min(MAX_DEPLOYED_UNITS, 6 + Math.floor(input.strategy / 20));
+    const addition = additionPoints(input);
+    const available = availablePoints(input);
+    const workforcePoints = totalWorkforcePoints(input);
 
     // B 規則：由「我方」政治高出對手 10 點以上，才能看到對方兵種。
     const politicsLead = input.politics - input.opponentPolitics;
@@ -176,6 +296,11 @@
 
     return {
       input,
+      workforcePoints,
+      unusedPoints: input.unusedPoints,
+      additionPoints: addition,
+      availablePoints: available,
+      allocatedAttrPoints: allocatedAttrPoints(input),
       hp: {
         base: input.baseHp,
         strategyBonus: strategyHpBonus,
@@ -227,12 +352,27 @@
     DEFAULT_INPUT,
     UNIT_PRESETS,
     FIELD_LIMITS,
+    ATTR_POOL_FIELDS,
+    TROOP_POOL_FIELDS,
+    UNUSED_POOL_FIELDS,
+    TROOP_BASE_SUM,
     MAX_RETURNS,
     BASE_HOLDING_CAP,
     RETURN_UNITS,
     MAX_DEPLOYED_UNITS,
     normalizeInput,
     calculate,
+    allocatedAttrPoints,
+    totalWorkforcePoints,
+    troopTypeSum,
+    additionPoints,
+    availablePoints,
+    setUnusedPoolValue,
+    adjustUnusedPool,
+    setAttrPoolValue,
+    adjustAttrPool,
+    setTroopPoolValue,
+    adjustTroopPool,
     roundTo,
   };
 });

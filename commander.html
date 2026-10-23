@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>指揮官狀態欄位｜戰術指揮官</title>
+<meta name="description" content="依 Everzone #101 指揮官屬性公式製作的即時狀態欄位：戰略、政治、知識、技術。">
+<link rel="stylesheet" href="./css/commander.css">
+</head>
+<body>
+<div class="desktop">
+  <div class="window">
+    <header class="titlebar">
+      <div class="titlebar-brand">
+        <span class="brand-mark" aria-hidden="true">TC</span>
+        <span class="brand-name">Designer</span>
+        <span class="brand-slash" aria-hidden="true">/</span>
+        <span class="brand-sub">指揮官狀態</span>
+      </div>
+      <div class="titlebar-meta">EVERZONE #101 · COMMANDER STATUS</div>
+    </header>
+
+    <div class="toolbar">
+      <div class="toolbar-note"><span class="status-dot" aria-hidden="true"></span>即時計算 · 資料只留在本機</div>
+      <div class="toolbar-actions">
+        <a class="toolbar-link" href="./index.html">← 單位資料庫</a>
+        <button class="ui-button" id="reset-button" type="button">重置</button>
+        <button class="ui-button primary" id="copy-button" type="button">複製 JSON</button>
+      </div>
+    </div>
+
+    <main class="workspace">
+      <div class="top-grid">
+        <fieldset class="group hero-panel">
+          <legend>Hero <span>指揮官</span></legend>
+
+          <div class="name-row">
+            <label for="commander-name">Name</label>
+            <input id="commander-name" data-bind="name" type="text" maxlength="32" autocomplete="off" spellcheck="false">
+          </div>
+
+          <div class="attributes">
+            <div class="field">
+              <label for="strategy" title="B 規則稱「戰術能力」">戰略 <span class="en">Strategy</span></label>
+              <div class="stepper">
+                <button class="step-button" type="button" data-field="strategy" data-delta="-1" aria-label="減少戰略">−</button>
+                <input id="strategy" data-bind="strategy" type="number" inputmode="numeric" min="0" max="999" step="1">
+                <button class="step-button" type="button" data-field="strategy" data-delta="1" aria-label="增加戰略">+</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="politics" title="B 規則稱「政治聲望」">政治 <span class="en">Politics</span></label>
+              <div class="stepper">
+                <button class="step-button" type="button" data-field="politics" data-delta="-1" aria-label="減少政治">−</button>
+                <input id="politics" data-bind="politics" type="number" inputmode="numeric" min="0" max="999" step="1">
+                <button class="step-button" type="button" data-field="politics" data-delta="1" aria-label="增加政治">+</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="knowledge" title="B 規則稱「教育水準」">知識 <span class="en">Knowledge</span></label>
+              <div class="stepper">
+                <button class="step-button" type="button" data-field="knowledge" data-delta="-1" aria-label="減少知識">−</button>
+                <input id="knowledge" data-bind="knowledge" type="number" inputmode="numeric" min="0" max="999" step="1">
+                <button class="step-button" type="button" data-field="knowledge" data-delta="1" aria-label="增加知識">+</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="technology" title="B 規則稱「技術能力」／MECH APT">技術 <span class="en">Technology</span></label>
+              <div class="stepper">
+                <button class="step-button" type="button" data-field="technology" data-delta="-1" aria-label="減少技術">−</button>
+                <input id="technology" data-bind="technology" type="number" inputmode="numeric" min="0" max="999" step="1">
+                <button class="step-button" type="button" data-field="technology" data-delta="1" aria-label="增加技術">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-rule"><span>其他輸入</span></div>
+
+          <div class="knobs">
+            <div class="field">
+              <label for="contribution">貢獻度（萬） <span class="en">Contribution</span></label>
+              <div class="stepper">
+                <button class="step-button" type="button" data-field="contribution" data-delta="-1" aria-label="減少貢獻度">−</button>
+                <input id="contribution" data-bind="contribution" type="number" inputmode="decimal" min="0" max="10000" step="0.5" title="1 萬 = 實戰體力 +1%">
+                <button class="step-button" type="button" data-field="contribution" data-delta="1" aria-label="增加貢獻度">+</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="returns">回歸次數 <span class="en">Returns</span></label>
+              <div class="stepper">
+                <button class="step-button" type="button" data-field="returns" data-delta="-1" aria-label="減少回歸次數">−</button>
+                <input id="returns" data-bind="returns" type="number" inputmode="numeric" min="0" max="12" step="1" title="每次回歸 +2 台，最多 12 次">
+                <button class="step-button" type="button" data-field="returns" data-delta="1" aria-label="增加回歸次數">+</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="opponent-politics">對手政治 <span class="en">Opponent</span></label>
+              <div class="stepper">
+                <button class="step-button" type="button" data-field="opponentPolitics" data-delta="-1" aria-label="減少對手政治">−</button>
+                <input id="opponent-politics" data-bind="opponentPolitics" type="number" inputmode="numeric" min="0" max="999" step="1" title="我方政治高於對手 10 點以上時，可按 F2 查看對方交戰兵種">
+                <button class="step-button" type="button" data-field="opponentPolitics" data-delta="1" aria-label="增加對手政治">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-rule"><span>指揮官產出</span></div>
+
+          <div class="ledger">
+            <div class="ledger-row">
+              <span class="ledger-label">科技等級</span>
+              <span class="leader" aria-hidden="true"></span>
+              <output data-output="techLevel" aria-label="科技等級">—</output>
+            </div>
+            <div class="ledger-row">
+              <span class="ledger-label">升級指數</span>
+              <span class="leader" aria-hidden="true"></span>
+              <output data-output="upgradeIndex" aria-label="升級指數">—</output>
+            </div>
+            <div class="ledger-row">
+              <span class="ledger-label">重量係數</span>
+              <span class="leader" aria-hidden="true"></span>
+              <output data-output="weightFactor" aria-label="重量係數">—</output>
+            </div>
+            <div class="ledger-row">
+              <span class="ledger-label">持有單位</span>
+              <span class="leader" aria-hidden="true"></span>
+              <output data-output="holding" aria-label="持有單位數">—</output>
+            </div>
+            <div class="ledger-row">
+              <span class="ledger-label">本國戰場人員</span>
+              <span class="leader" aria-hidden="true"></span>
+              <output data-output="fieldPersonnel" aria-label="本國戰場人員數">—</output>
+            </div>
+            <div class="ledger-row">
+              <span class="ledger-label">上陣台數</span>
+              <span class="leader" aria-hidden="true"></span>
+              <output data-output="deployedUnits" aria-label="上陣台數">—</output>
+            </div>
+          </div>
+
+          <div class="intel" id="intel-strip">
+            <div class="intel-head">
+              <span>敵方情報</span>
+              <strong data-output="enemyVisibility">—</strong>
+            </div>
+            <p data-output="enemyDetail">—</p>
+          </div>
+        </fieldset>
+
+        <fieldset class="group unit-panel">
+          <legend><span data-output="unitName">Daeya</span> <span data-output="unitCategory">單位投影</span></legend>
+
+          <div class="unit-picker">
+            <label for="unit-preset">Unit</label>
+            <select id="unit-preset" aria-label="選擇單位模板"></select>
+          </div>
+          <p class="unit-hint">示範單位模板；選取後仍可直接改基礎體力、重量與空間。</p>
+
+          <div class="unit-fields">
+            <div class="field">
+              <label for="unit-level">單位等級 <span class="en">Level</span></label>
+              <div class="stepper">
+                <button class="step-button" type="button" data-field="unitLevel" data-delta="-1" aria-label="減少單位等級">−</button>
+                <input id="unit-level" data-bind="unitLevel" type="number" inputmode="numeric" min="1" max="200" step="1">
+                <button class="step-button" type="button" data-field="unitLevel" data-delta="1" aria-label="增加單位等級">+</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="base-hp">基礎體力 <span class="en">HP</span></label>
+              <div class="stepper">
+                <button class="step-button" type="button" data-field="baseHp" data-delta="-50" aria-label="減少基礎體力">−</button>
+                <input id="base-hp" data-bind="baseHp" type="number" inputmode="numeric" min="1" max="100000" step="50">
+                <button class="step-button" type="button" data-field="baseHp" data-delta="50" aria-label="增加基礎體力">+</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="base-weight">基礎重量 <span class="en">kg</span></label>
+              <div class="stepper">
+                <button class="step-button" type="button" data-field="baseWeight" data-delta="-5" aria-label="減少基礎重量">−</button>
+                <input id="base-weight" data-bind="baseWeight" type="number" inputmode="decimal" min="0.1" max="10000" step="5">
+                <button class="step-button" type="button" data-field="baseWeight" data-delta="5" aria-label="增加基礎重量">+</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="base-space">基礎空間 <span class="en">L</span></label>
+              <div class="stepper">
+                <button class="step-button" type="button" data-field="baseSpace" data-delta="-5" aria-label="減少基礎空間">−</button>
+                <input id="base-space" data-bind="baseSpace" type="number" inputmode="decimal" min="0.1" max="10000" step="5">
+                <button class="step-button" type="button" data-field="baseSpace" data-delta="5" aria-label="增加基礎空間">+</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <span class="field-caption">單位類型 <span class="en">Type</span></span>
+              <output class="static-field" id="unit-type-readout" data-output="unitType" aria-label="單位類型">—</output>
+            </div>
+          </div>
+
+          <div class="big-stats">
+            <div class="big-stat">
+              <span>Health</span>
+              <strong data-output="effectiveHp">—</strong>
+              <small data-output="hpBreakdown">—</small>
+            </div>
+            <div class="big-stat">
+              <span>Weight</span>
+              <strong data-output="effectiveWeight">—</strong>
+              <small data-output="weightBreakdown">—</small>
+            </div>
+            <div class="big-stat">
+              <span>Space</span>
+              <strong data-output="effectiveSpace">—</strong>
+              <small data-output="spaceBreakdown">—</small>
+            </div>
+          </div>
+
+          <div class="unit-breakdown">
+            <div><span>戰略加成</span><b data-output="strategyBonus">—</b></div>
+            <div><span>技術增幅</span><b data-output="techBoost">—</b></div>
+            <div><span>貢獻加成</span><b data-output="contributionBonus">—</b></div>
+          </div>
+
+          <div class="slot-box">
+            <div class="slot-head">
+              <span>編制承載</span>
+              <strong data-output="holdingBig">—</strong>
+            </div>
+            <div class="slot-track" aria-hidden="true">
+              <span class="slot-fill" id="slot-fill"></span>
+              <i class="slot-cap" title="基礎上限 48"></i>
+            </div>
+            <p data-output="holdingDetail">—</p>
+          </div>
+
+          <div class="unit-footnote">
+            <div><span>上陣台數</span><b data-output="deploymentSmall">—</b></div>
+            <div><span>戰場人員</span><b data-output="personnelSmall">—</b></div>
+          </div>
+        </fieldset>
+      </div>
+
+      <section class="group formula-panel" aria-labelledby="formula-heading">
+        <div class="panel-heading">
+          <div>
+            <h2 id="formula-heading">公式明細</h2>
+            <p>A：#101〈指揮官屬性資訊〉× B：龍傲天下規則對照後即時代入</p>
+          </div>
+          <span class="live-badge"><span aria-hidden="true"></span>LIVE</span>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">指揮官狀態公式、目前代入值與計算結果</caption>
+            <thead>
+              <tr>
+                <th scope="col">狀態欄位</th>
+                <th scope="col">公式</th>
+                <th scope="col">目前代入</th>
+                <th scope="col">結果</th>
+              </tr>
+            </thead>
+            <tbody id="formula-body"></tbody>
+          </table>
+        </div>
+
+        <div class="formula-notes">
+          <p><strong>取整</strong>知識、技術、政治、戰略的除法皆取整數（向下取整）；體力套用貢獻加成後向下取整。</p>
+          <p><strong>上陣</strong>B 規則：每 20 點 +1 台，最多 12 台；A 的基礎 6 台保留。</p>
+          <p><strong>重量／空間</strong>兩者各自以基礎值乘上同一個技術倍率，並非同一個數值。</p>
+          <p><strong>編制／可見性</strong>持有上限與回歸沿用 A；可見性改採 B 的「我方政治高 10 點」方向，並以 F2 查看兵種。</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="statusbar">
+      <span>A：<a href="https://everzone.tistory.com/101" target="_blank" rel="noreferrer">Everzone #101</a>｜B：龍傲天下（使用者提供）</span>
+      <span>原生 JS · 無外部依賴</span>
+    </footer>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="./js/commander-core.js" defer></script>
+<script src="./js/commander-ui.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="展示圖預留位置">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#101c2b"/>
+      <stop offset="1" stop-color="#070f18"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="82%" r="58%">
+      <stop offset="0" stop-color="#2d6cb1" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#2d6cb1" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#24405e" stroke-width="1" opacity="0.7"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg)"/>
+  <rect width="1200" height="750" fill="url(#grid)" opacity="0.55"/>
+  <rect width="1200" height="750" fill="url(#glow)"/>
+
+  <g fill="none" stroke="#5b8fc4" stroke-width="3" opacity="0.75">
+    <path d="M56 116V56h60"/>
+    <path d="M1144 116V56h-60"/>
+    <path d="M56 634v60h60"/>
+    <path d="M1144 634v60h-60"/>
+  </g>
+
+  <g fill="none" stroke="#3f6f9e" opacity="0.55">
+    <circle cx="600" cy="352" r="132" stroke-dasharray="4 10"/>
+    <circle cx="600" cy="352" r="86"/>
+    <path d="M600 190v64M600 450v64M438 352h64M698 352h64"/>
+  </g>
+
+  <text x="600" y="342" text-anchor="middle" fill="#e4eefb"
+        font-family="Consolas, 'Cascadia Mono', monospace" font-size="52" letter-spacing="18">SHOWCASE</text>
+  <text x="600" y="386" text-anchor="middle" fill="#7fa3c8"
+        font-family="Consolas, 'Cascadia Mono', monospace" font-size="17" letter-spacing="7">1200 × 750</text>
+
+  <text x="600" y="500" text-anchor="middle" fill="#9dbdde"
+        font-family="'Microsoft JhengHei', 'Noto Sans TC', sans-serif" font-size="22">把這張圖換成你的單位圖</text>
+  <text x="600" y="534" text-anchor="middle" fill="#5f7f9f"
+        font-family="Consolas, 'Cascadia Mono', monospace" font-size="13" letter-spacing="2">images/showcase-placeholder.svg</text>
+
+  <text x="600" y="700" text-anchor="middle" fill="#41617f"
+        font-family="Consolas, 'Cascadia Mono', monospace" font-size="12" letter-spacing="6">TCR // DESIGNER // SHOWCASE</text>
+</svg>

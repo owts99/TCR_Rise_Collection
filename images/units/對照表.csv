@@ -1,0 +1,45 @@
+﻿兵種名稱,英文名,units 頁面,系別,底圖檔名,尺寸,另有 PNG,TCMAX 頁面,備註
+刀鋒者,Blader,blader,步兵系,unit_view23l.gif,189×159,blader.png,war/daufou.htm,另有 PNG 版
+巴茲尼德,Bazonoid,bazonoid,步兵系,unit_view22l.gif,179×188,bazonoid.png,war/bass.htm,另有 PNG 版
+巨人,Giant,giant,步兵系,unit_view04l.gif,166×213,giant.png,war/bigman.htm,另有 PNG 版
+布瑞德,,,步兵系,,,,war/bured.htm,TCMAX 無大圖；units 頁面無對應
+艾克斯諾,Exonoid,exonoid,步兵系,unit_view28l.gif,145×156,exonoid.png,war/dolaemo.htm,另有 PNG 版
+狙擊者,Sniper,sniper,步兵系,unit_view24l.gif,132×208,sniper.png,war/gg.htm,譯名差異：狙擊者 ↔ 狙擊手；另有 PNG 版
+虎鯊,Shark,shark,步兵系,,,shark.png,war/husa.htm,TCMAX 無大圖；另有 PNG 版
+鈦拉諾,Tilanoid,tilanoid,步兵系,unit_view27l.gif,145×155,tilanoid.png,war/tairano.htm,另有 PNG 版
+榴彈兵,Railgunner,railgunner,步兵系,unit_view25l.gif,133×186,railgunner.png,war/riodai.htm,另有 PNG 版
+歌利亞,Goliath,goliath,步兵系,unit_view29l.gif,162×157,goliath.png,war/gerriya.htm,譯名差異：歌利亞 ↔ 哥利亞；另有 PNG 版
+魅影,Phantom,phantom,步兵系,unit_view05l.gif,99×213,phantom.png,war/meim.htm,另有 PNG 版
+戰猿,Humanoid,humanoid,步兵系,unit_view01l.gif,158×208,humanoid.png,war/monkey.htm,另有 PNG 版
+雙管巴爾幹,Twin Vulcan,twin_vulcan,步兵系,unit_view03l.gif,182×156,twin_vulcan.png,war/baergai.htm,另有 PNG 版
+GTA火箭兵,GTA Rocket Launcher,gta,步兵系,unit_view02l.gif,192×208,gta.png,war/GTA.htm,另有 PNG 版
+中戰車,Medium Tank,medium_tank,機械系,unit_view30l.gif,173×112,,war/jiojyai.htm,
+公爵,Duke,duke,機械系,unit_view09l.gif,171×179,,war/guojie.htm,
+自走砲,Artillery,artillery,機械系,unit_view08l.gif,163×215,,war/zzo.htm,
+幽靈公爵,Spooky Duke,spooky_duke,機械系,unit_view31l.gif,147×170,,war/yogo.htm,
+突岩,Thor,thor,機械系,unit_view32l.gif,134×183,,war/tuye.htm,
+重戰車,Heavy Tank,heavy_tank,機械系,unit_view33l.gif,176×113,,war/zozai.htm,
+氣墊掠奪者,Hover Raid,hover_raid,機械系,unit_view34l.gif,141×154,,war/chidyai.htm,譯名差異：氣墊掠奪者 ↔ 戰艦控甲者
+輕型摩托車,Light Bike,light_bike,機械系,unit_view07l.gif,189×179,,war/chimo.htm,譯名差異：輕型摩托車 ↔ 輕型摩托
+輕裝甲車,,,機械系,unit_view06l.gif,195×166,,war/shitai.htm,units 頁面無對應
+火之鷹,Fire Eagle,fire_eagle,飛行系,unit_view37l.gif,156×123,,war/fire.htm,
+占薩克,Zanak,zanak,飛行系,unit_view10l.gif,201×137,,war/zaisak.htm,
+艾洛比,Exorion,exorion,飛行系,unit_view35l.gif,145×112,,war/irobi.htm,
+空戰機,Aerofighter,aerofighter,飛行系,,,,war/kuogiai.htm,TCMAX 無大圖
+執法者,,,飛行系,unit_view36l.gif,156×124,,war/zfa.htm,units 頁面無對應
+蛇夫座,,,飛行系,unit_view11l.gif,190×122,,war/serfu.htm,units 頁面無對應
+萊汀妮,,,飛行系,unit_view13l.gif,193×181,,war/pailers.htm,units 頁面無對應
+雷霆弩,Elombre,elombre,飛行系,,,,war/reting.htm,TCMAX 無大圖
+嘲弄者,,,飛行系,,,,war/bemock.htm,TCMAX 無大圖；units 頁面無對應
+獵戶座,Orion,orion,飛行系,unit_view12l.gif,196×113,,war/riehu.htm,
+支援者,Felious,felious,特殊系,unit_view16l.gif,183×122,,war/zue.htm,
+日蝕,Eclipse,eclipse,特殊系,unit_view19l.gif,116×176,,war/eatsun.htm,
+生化兵,Ranger,ranger,特殊系,unit_view40l.gif,123×187,,war/shehwa.htm,
+地雷兵,Bomb Squad,bomb_squad,特殊系,unit_view17l.gif,99×212,,war/dire.htm,
+安諾爾,,,特殊系,,,,war/anor.htm,TCMAX 無大圖；units 頁面無對應
+空中判官,Executor,,特殊系,unit_view20l.gif,173×159,,war/kopai.htm,units 有同名頁面：executor／jest
+修理者,Repairer,repairer,特殊系,unit_view15l.gif,187×127,,war/shioshio.htm,
+野戰醫院,Heal Generator,heal_generator,特殊系,unit_view39l.gif,139×143,,war/hospital.htm,
+搜索者,Radar Squad,radar_squad,特殊系,unit_view18l.gif,168×156,,war/reda.htm,譯名差異：搜索者 ↔ 搜尋者
+雕堡車,Bunkernoid,bunkernoid,特殊系,unit_view21l.gif,178×135,,war/diaubau.htm,譯名差異：雕堡車 ↔ 碉堡車
+醫護兵,Medic,medic,特殊系,unit_view14l.gif,102×207,,war/hus.htm,譯名差異：醫護兵 ↔ 醫療兵

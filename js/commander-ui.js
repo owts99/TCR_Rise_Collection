@@ -5,15 +5,22 @@
     DEFAULT_INPUT,
     FIELD_LIMITS,
     UNUSED_POOL_FIELDS,
+    TROOP_POOL_FIELDS,
     UNIT_PRESETS,
     MAX_DEPLOYED_UNITS,
     calculate,
     setUnusedPoolValue,
     adjustUnusedPool,
+    setTroopPoolValue,
+    adjustTroopPool,
     roundTo,
   } = globalThis.CommanderCore;
 
   const UNUSED_POOL_FIELD_SET = new Set(UNUSED_POOL_FIELDS);
+  const TROOP_POOL_FIELD_SET = new Set(TROOP_POOL_FIELDS);
+
+  /** 兵種降級被未使用點數卡住時的提示。 */
+  const TROOP_REFUND_BLOCKED_MESSAGE = '追加點數已分配到能力；先退回能力點數，才能降兵種等級。';
 
   const state = { ...DEFAULT_INPUT };
 
@@ -319,6 +326,12 @@ function parseNumericInput(element) {
   return Number.isFinite(value) ? value : null;
 }
 
+/** 把輸入值整理成該欄位最終會套用的整數，用來判斷是否被退款上限卡住。 */
+function clampIntegerToField(field, value) {
+  const limits = FIELD_LIMITS[field];
+  return Math.min(limits.max, Math.max(limits.min, Math.round(value)));
+}
+
 function bindInputs() {
   for (const [key, element] of elements.inputs) {
     element.addEventListener('input', () => {
@@ -333,6 +346,15 @@ function bindInputs() {
 
       if (UNUSED_POOL_FIELD_SET.has(key)) {
         Object.assign(state, setUnusedPoolValue(state, key, value));
+        syncInputs();
+        render();
+        return;
+      }
+
+      if (TROOP_POOL_FIELD_SET.has(key)) {
+        const next = setTroopPoolValue(state, key, value);
+        if (next[key] < clampIntegerToField(key, value)) showToast(TROOP_REFUND_BLOCKED_MESSAGE);
+        Object.assign(state, next);
         syncInputs();
         render();
         return;
@@ -367,6 +389,15 @@ function bindSteppers() {
 
       if (UNUSED_POOL_FIELD_SET.has(field)) {
         Object.assign(state, adjustUnusedPool(state, field, delta));
+        syncInputs();
+        render();
+        return;
+      }
+
+      if (TROOP_POOL_FIELD_SET.has(field)) {
+        const next = adjustTroopPool(state, field, delta);
+        if (next[field] === state[field] && delta < 0) showToast(TROOP_REFUND_BLOCKED_MESSAGE);
+        Object.assign(state, next);
         syncInputs();
         render();
         return;

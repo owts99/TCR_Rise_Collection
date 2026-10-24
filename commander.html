@@ -107,12 +107,12 @@
 
           <div class="attributes workforce-points">
             <div class="field">
-              <label for="workforce_points" title="（未使用 + 追加）+ 四屬性">全部點數 <span class="en">All Points</span></label>
+              <label for="workforce_points" title="未使用（含兵種追加）+ 四項能力">全部點數 <span class="en">All Points</span></label>
               <output id="workforce_points" class="static-field" data-output="workforcePoints" aria-label="全部點數">—</output>
             </div>
 
             <div class="field">
-              <label for="unused_points" title="未使用 + 追加（兵種等級 +1 → 追加 +1 → 此值 +1）">未使用點數 <span class="en">Unused</span></label>
+              <label for="unused_points" title="可分配池；兵種等級 +1 的追加點數會直接轉入這裡，顯示值就是可扣額度">未使用點數 <span class="en">Unused</span></label>
               <output id="unused_points" class="static-field" data-output="availablePoints" aria-label="未使用點數">—</output>
             </div>
           </div>
@@ -325,35 +325,144 @@
         </fieldset>
       </div>
 
-      <section class="group formula-panel" aria-labelledby="formula-heading">
-        <div class="panel-heading">
-          <div>
-            <h2 id="formula-heading">公式明細</h2>
-            <p>A：#101〈指揮官屬性資訊〉× B：龍傲天下規則對照後即時代入</p>
+      <section class="group formula-panel" aria-label="工作區面板">
+        <div class="tabbar">
+          <div class="tablist" role="tablist" aria-label="工作區頁簽" data-tabs>
+            <button class="tab" type="button" role="tab" id="tab-formula" aria-controls="pane-formula" aria-selected="true" tabindex="0">
+              <span class="tab-no">01</span>
+              <span class="tab-label">公式明細</span>
+              <span class="tab-note">9 列即時計算</span>
+            </button>
+            <button class="tab" type="button" role="tab" id="tab-showcase" aria-controls="pane-showcase" aria-selected="false" tabindex="-1">
+              <span class="tab-no">02</span>
+              <span class="tab-label">展示台</span>
+              <span class="tab-note">圖 · 動態人偶</span>
+            </button>
           </div>
-          <span class="live-badge"><span aria-hidden="true"></span>LIVE</span>
+          <span class="tabbar-fill" aria-hidden="true"></span>
         </div>
 
-        <div class="table-wrap">
-          <table>
-            <caption class="sr-only">指揮官狀態公式、目前代入值與計算結果</caption>
-            <thead>
-              <tr>
-                <th scope="col">狀態欄位</th>
-                <th scope="col">公式</th>
-                <th scope="col">目前代入</th>
-                <th scope="col">結果</th>
-              </tr>
-            </thead>
-            <tbody id="formula-body"></tbody>
-          </table>
+        <div class="tabpane" role="tabpanel" id="pane-formula" aria-labelledby="tab-formula" tabindex="0">
+          <div class="panel-heading">
+            <div>
+              <h2 id="formula-heading">公式明細</h2>
+              <p>A：#101〈指揮官屬性資訊〉× B：龍傲天下規則對照後即時代入</p>
+            </div>
+            <span class="live-badge"><span aria-hidden="true"></span>LIVE</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <caption class="sr-only">指揮官狀態公式、目前代入值與計算結果</caption>
+              <thead>
+                <tr>
+                  <th scope="col">狀態欄位</th>
+                  <th scope="col">公式</th>
+                  <th scope="col">目前代入</th>
+                  <th scope="col">結果</th>
+                </tr>
+              </thead>
+              <tbody id="formula-body"></tbody>
+            </table>
+          </div>
+
+          <div class="formula-notes">
+            <p><strong>取整</strong>知識、技術、政治、戰略的除法皆取整數（向下取整）；體力套用貢獻加成後向下取整。</p>
+            <p><strong>上陣</strong>B 規則：每 20 點 +1 台，最多 12 台；A 的基礎 6 台保留。</p>
+            <p><strong>重量／空間</strong>兩者各自以基礎值乘上同一個技術倍率，並非同一個數值。</p>
+            <p><strong>編制／可見性</strong>持有上限與回歸沿用 A；可見性改採 B 的「我方政治高 10 點」方向，並以 F2 查看兵種。</p>
+          </div>
         </div>
 
-        <div class="formula-notes">
-          <p><strong>取整</strong>知識、技術、政治、戰略的除法皆取整數（向下取整）；體力套用貢獻加成後向下取整。</p>
-          <p><strong>上陣</strong>B 規則：每 20 點 +1 台，最多 12 台；A 的基礎 6 台保留。</p>
-          <p><strong>重量／空間</strong>兩者各自以基礎值乘上同一個技術倍率，並非同一個數值。</p>
-          <p><strong>編制／可見性</strong>持有上限與回歸沿用 A；可見性改採 B 的「我方政治高 10 點」方向，並以 F2 查看兵種。</p>
+        <div class="tabpane" role="tabpanel" id="pane-showcase" aria-labelledby="tab-showcase" tabindex="0" hidden>
+          <div class="panel-heading">
+            <div>
+              <h2>展示台</h2>
+              <p>單位圖與動態人偶；圖檔可即時替換，不需要改程式。</p>
+            </div>
+            <span class="live-badge"><span aria-hidden="true"></span>STAGE</span>
+          </div>
+
+          <div class="showcase">
+            <figure class="showcase-figure">
+              <div class="figure-frame">
+                <img id="showcase-image" src="./images/units/unit_view01l.gif" alt="戰猿（Humanoid）單位展示圖" width="158" height="208">
+                <span class="figure-tag">HUMANOID · 158 × 208</span>
+                <div class="figure-name">
+                  <strong>戰猿</strong>
+                  <span>Humanoid · 步兵系</span>
+                </div>
+              </div>
+              <div class="figure-tools">
+                <input id="showcase-file" class="file-input" type="file" accept="image/*">
+                <label class="ui-button file-button" for="showcase-file">換圖</label>
+                <span class="figure-hint">或把圖存成 <code>images/units/unit_view01l.gif</code> 覆蓋</span>
+              </div>
+            </figure>
+
+            <div class="doll-stage" data-doll-stage>
+              <span class="stage-tag">PLATE 02 · ANIMATED</span>
+              <div class="doll-grid" aria-hidden="true"></div>
+              <div class="doll-ring ring-a" aria-hidden="true"></div>
+              <div class="doll-ring ring-b" aria-hidden="true"></div>
+
+              <div class="doll-parallax">
+                <div class="doll-float">
+                  <svg class="doll" viewBox="0 0 220 300" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="dollBody" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stop-color="#e8f1fb"/>
+                        <stop offset="0.5" stop-color="#a8bcd4"/>
+                        <stop offset="1" stop-color="#6d829a"/>
+                      </linearGradient>
+                      <linearGradient id="dollDark" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stop-color="#3c5168"/>
+                        <stop offset="1" stop-color="#22303f"/>
+                      </linearGradient>
+                    </defs>
+
+                    <line x1="110" y1="42" x2="110" y2="22" stroke="#8fa9c4" stroke-width="3" stroke-linecap="round"/>
+                    <circle class="doll-antenna-tip" cx="110" cy="18" r="4.5" fill="#7fe3ff"/>
+
+                    <rect x="78" y="42" width="64" height="46" rx="15" fill="url(#dollBody)" stroke="#33506c" stroke-width="2"/>
+                    <rect x="70" y="58" width="8" height="18" rx="3" fill="#5d7590"/>
+                    <rect x="142" y="58" width="8" height="18" rx="3" fill="#5d7590"/>
+                    <rect class="doll-visor" x="88" y="60" width="44" height="10" rx="5" fill="#69e6ff"/>
+
+                    <rect x="102" y="86" width="16" height="10" rx="3" fill="#4e647c"/>
+
+                    <rect x="66" y="94" width="88" height="98" rx="20" fill="url(#dollBody)" stroke="#33506c" stroke-width="2"/>
+                    <rect x="84" y="108" width="52" height="46" rx="9" fill="url(#dollDark)" stroke="#1f2f40" stroke-width="1.5"/>
+                    <circle class="doll-core" cx="110" cy="131" r="10" fill="#6fe8ff"/>
+                    <circle cx="110" cy="131" r="4" fill="#e9fbff"/>
+                    <rect x="78" y="178" width="64" height="12" rx="4" fill="#4e647c"/>
+
+                    <circle cx="64" cy="108" r="13" fill="url(#dollDark)" stroke="#1f2f40" stroke-width="1.5"/>
+                    <circle cx="156" cy="108" r="13" fill="url(#dollDark)" stroke="#1f2f40" stroke-width="1.5"/>
+                    <rect class="doll-arm-left" x="50" y="118" width="17" height="64" rx="8.5" fill="url(#dollBody)" stroke="#33506c" stroke-width="1.5"/>
+                    <rect class="doll-arm-right" x="153" y="118" width="17" height="64" rx="8.5" fill="url(#dollBody)" stroke="#33506c" stroke-width="1.5"/>
+                    <circle cx="58.5" cy="186" r="8" fill="#5d7590"/>
+                    <circle cx="161.5" cy="186" r="8" fill="#5d7590"/>
+
+                    <rect x="80" y="190" width="60" height="16" rx="6" fill="#4e647c"/>
+
+                    <rect x="84" y="204" width="20" height="60" rx="9" fill="url(#dollBody)" stroke="#33506c" stroke-width="1.5"/>
+                    <rect x="116" y="204" width="20" height="60" rx="9" fill="url(#dollBody)" stroke="#33506c" stroke-width="1.5"/>
+                    <rect x="76" y="262" width="32" height="13" rx="5" fill="#3c5168"/>
+                    <rect x="112" y="262" width="32" height="13" rx="5" fill="#3c5168"/>
+
+                    <circle cx="110" cy="168" r="2.5" fill="#7fe3ff" opacity="0.8"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="doll-shadow" aria-hidden="true"></div>
+              <div class="doll-caption">
+                <strong>動態人偶</strong>
+                <span>CSS 動畫 · 移動滑鼠有視差</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>
@@ -368,5 +477,8 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="./js/commander-core.js" defer></script>
 <script src="./js/commander-ui.js" defer></script>
+<script src="./js/commander-tabs.js" defer></script>
 </body>
+</html>
+
 </html>

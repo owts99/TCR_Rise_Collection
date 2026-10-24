@@ -11,9 +11,9 @@
 
 ## 快速開始
 
-直接開啟 [commander.html](commander.html) 即可。
+**直接開啟 [commander.html](commander.html) 即可。**
 
-也可以從 [index.html](index.html) 的「指揮官狀態」導覽進入。
+**也可以從 [index.html](index.html) 的「指揮官狀態」導覽進入。**
 
 若要用本機 HTTP 伺服器預覽：
 
@@ -48,8 +48,6 @@ python -m http.server 8000
 ![舊式 Designer 介面參考截圖](images/designer-reference.png)
 
 此截圖僅供版面與欄位配置參考；圖中的單位數值不是本頁的計算資料。
-
-術語對照（兵種等級 vs 能力、Mobile ≠ Mech Apt 等）見 [COMMANDER_TERMS.md](COMMANDER_TERMS.md)。
 
 ## 檔案結構
 

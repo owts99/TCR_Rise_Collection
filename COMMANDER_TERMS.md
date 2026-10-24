@@ -31,11 +31,12 @@ Designer 的 **Total** 只加總右欄四能力，**不含**左欄四系等級�
 
 ## 3. 點數連動
 
-- 兵種等級 **+1** → `additionPoints +1` → `availablePoints +1`（**不扣** `unusedPoints`）  
-- `additionPoints = 四系等級加總 − 4`（每系最低 1）  
-- 四項**能力**加減仍與 `unusedPoints` 互換  
-- `availablePoints = unusedPoints + additionPoints`  
-- `workforcePoints`（全部點數）= `availablePoints` + 四項能力  
+- **單一來源**：`unusedPoints` 就是唯一可分配池；畫面「未使用點數」直接顯示它，扣款也用同一個數  
+- 兵種等級 **+1** → `additionPoints +1`，並在同一次操作把這 1 點**轉入** `unusedPoints`（之後才點得到能力）  
+- 兵種等級 **−1** → 從 `unusedPoints` **收回** 1 點；若點數已花在能力上（未使用為 0），要先退回能力點數才能降級  
+- `additionPoints = 四系等級加總 − 4`（每系最低 1），僅作為「追加點數」的統計顯示  
+- `availablePoints ≡ unusedPoints`（保留舊名稱供畫面／payload 相容）  
+- `workforcePoints`（全部點數）= `unusedPoints` + 四項能力 = 40 + `additionPoints`  
 
 ## 4. 三層勿混（坦克／機械最容易混）
 

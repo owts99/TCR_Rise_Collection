@@ -23,18 +23,33 @@ test('預設值符合 A+B 規則（屬性初始各 5、未使用 20）', () => {
   assert.equal(result.workforcePoints, 40);
   assert.equal(result.allocatedAttrPoints, 20);
   assert.equal(result.hp.strategyBonus, 15);
-  assert.equal(result.hp.effective, 1215);
+  assert.equal(result.hp.effective, 1415);
   assert.equal(result.tech.knowledgeTier, 1);
   assert.equal(result.tech.technologyTier, 0);
   assert.equal(result.tech.level, 3);
   assert.equal(result.upgradeIndex, 3);
-  assert.equal(result.weight.effective, 78.13);
-  assert.equal(result.space.effective, 78.13);
+  assert.equal(result.weight.effective, 72.92);
+  assert.equal(result.space.effective, 72.92);
   assert.equal(result.holding.base, 25);
   assert.equal(result.holding.effective, 25);
   assert.equal(result.personnel, 10);
   assert.equal(result.deployment, 6);
   assert.equal(result.visibility.canSee, false);
+});
+
+test('未使用點數與可扣額度是同一個數（單一來源）', () => {
+  const samples = [
+    DEFAULT_INPUT,
+    adjustTroopPool(DEFAULT_INPUT, 'infantry', 5),
+    adjustAttrPool(DEFAULT_INPUT, 'technology', 7),
+    { ...DEFAULT_INPUT, infantry: 30, strategy: 0, politics: 0, knowledge: 0, technology: 0, unusedPoints: 0 },
+  ];
+
+  for (const sample of samples) {
+    const result = calculate(sample);
+    assert.equal(result.availablePoints, result.input.unusedPoints);
+    assert.equal(availablePoints(result.input), result.input.unusedPoints);
+  }
 });
 
 test('追加點數 = 四系兵種等級加總 − 4', () => {
@@ -62,13 +77,21 @@ test('全部點數 = 未使用 + 四屬性 + 追加點數', () => {
   assert.equal(totalWorkforcePoints(result.input), 40);
 });
 
-test('兵種等級 +1 → addition +1 → available +1；unused 不變', () => {
+test('兵種等級 +1 → 追加點數轉入未使用點數，可實際花用', () => {
   const next = adjustTroopPool(DEFAULT_INPUT, 'infantry', 1);
   assert.equal(next.infantry, 2);
-  assert.equal(next.unusedPoints, 20);
+  assert.equal(next.unusedPoints, 21);
   assert.equal(additionPoints(next), 1);
   assert.equal(availablePoints(next), 21);
   assert.equal(totalWorkforcePoints(next), 41);
+
+  // 追加的 1 點真的能點到能力上（以前會顯示 21 但只能花 20）。
+  let spent = next;
+  for (let i = 0; i < 21; i += 1) spent = adjustAttrPool(spent, 'strategy', 1);
+  assert.equal(spent.strategy, 26);
+  assert.equal(spent.unusedPoints, 0);
+  assert.equal(availablePoints(spent), 0);
+  assert.equal(totalWorkforcePoints(spent), 41);
 });
 
 test('屬性 + 會降低（未使用 + 追加）加總', () => {
@@ -79,28 +102,49 @@ test('屬性 + 會降低（未使用 + 追加）加總', () => {
   assert.equal(totalWorkforcePoints(next), 40);
 });
 
-test('兵種等級 − 只降 addition；未使用為 0 時兵種仍可 +', () => {
+test('兵種等級 − 會收回追加點數；點數已被花掉時降不了', () => {
   const refunded = adjustTroopPool(
     { ...DEFAULT_INPUT, infantry: 3, unusedPoints: 18 },
     'infantry',
     -1,
   );
   assert.equal(refunded.infantry, 2);
-  assert.equal(refunded.unusedPoints, 18);
+  assert.equal(refunded.unusedPoints, 17); // 降 1 級收回 1 點追加點數
   assert.equal(additionPoints(refunded), 1);
-  assert.equal(availablePoints(refunded), 19);
+  assert.equal(availablePoints(refunded), 17);
 
   const raised = adjustTroopPool({ ...DEFAULT_INPUT, unusedPoints: 0 }, 'mech', 1);
   assert.equal(raised.mech, 2);
-  assert.equal(raised.unusedPoints, 0);
+  assert.equal(raised.unusedPoints, 1);
   assert.equal(additionPoints(raised), 1);
   assert.equal(availablePoints(raised), 1);
 });
 
-test('直接輸入兵種等級不受 unused 限制，最高到欄位上限', () => {
+test('追加點數已花在能力上時，兵種等級降不回去', () => {
+  // 步兵升到 11 級（追加 10 點），再把 30 點全部點到戰略。
+  let state = adjustTroopPool(DEFAULT_INPUT, 'infantry', 10);
+  for (let i = 0; i < 30; i += 1) state = adjustAttrPool(state, 'strategy', 1);
+  assert.equal(state.strategy, 35);
+  assert.equal(state.unusedPoints, 0);
+  assert.equal(totalWorkforcePoints(state), 50);
+
+  const blocked = adjustTroopPool(state, 'infantry', -1);
+  assert.equal(blocked.infantry, 11);
+  assert.equal(blocked.unusedPoints, 0);
+
+  // 先退回 3 點能力，就能降 3 級（每級收回 1 點）。
+  state = adjustAttrPool(state, 'strategy', -3);
+  assert.equal(state.unusedPoints, 3);
+  const lowered = adjustTroopPool(state, 'infantry', -3);
+  assert.equal(lowered.infantry, 8);
+  assert.equal(lowered.unusedPoints, 0);
+  assert.equal(totalWorkforcePoints(lowered), 47); // 40 + 追加 7
+});
+
+test('直接輸入兵種等級會把追加點數一次轉入未使用點數', () => {
   const next = setTroopPoolValue(DEFAULT_INPUT, 'air', 100);
   assert.equal(next.air, 100);
-  assert.equal(next.unusedPoints, 20);
+  assert.equal(next.unusedPoints, 119); // 20 + 追加 99
   assert.equal(additionPoints(next), 99); // 1+1+100+1-4
   assert.equal(availablePoints(next), 119);
   assert.equal(totalWorkforcePoints(next), 139);
@@ -139,8 +183,8 @@ test('戰略每 1 點增加 3 點基礎體力', () => {
 
 test('貢獻度以「萬」為單位，1 萬等於體力 +1%', () => {
   const result = calculate({ ...DEFAULT_INPUT, contribution: 100 });
-  assert.equal(result.hp.beforeContribution, 1215);
-  assert.equal(result.hp.effective, 2430);
+  assert.equal(result.hp.beforeContribution, 1415);
+  assert.equal(result.hp.effective, 2830);
 });
 
 test('知識與技術的分項整數除法', () => {

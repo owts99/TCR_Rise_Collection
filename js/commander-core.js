@@ -32,13 +32,13 @@
     knowledge: 5,
     technology: 5,
     unitLevel: 2,
-    baseHp: 1200,
-    baseWeight: 75,
-    baseSpace: 75,
+    baseHp: 1400,
+    baseWeight: 70,
+    baseSpace: 70,
     contribution: 0,
     returns: 0,
     opponentPolitics: 30,
-    unitPresetId: 'daeya',
+    unitPresetId: 'humanoid',
   });
 
   /**
@@ -90,7 +90,11 @@
   /** 未使用點數池：僅四項「能力」（戰略／政治／知識／技術）。 */
   const UNUSED_POOL_FIELDS = Object.freeze([...ATTR_POOL_FIELDS]);
 
-  /** 四系兵種等級最低各 1，加總基底 4；超過的部分才算追加點數。 */
+  /**
+   * 四系兵種等級最低各 1，加總基底 4；超過的部分才算追加點數。
+   * 追加點數會在兵種等級變動的當下轉入／轉出 unusedPoints，
+   * 所以「顯示的未使用點數」與「實際可扣的額度」共用同一個數。
+   */
   const TROOP_BASE_SUM = 4;
 
   const MAX_RETURNS = 12;
@@ -173,12 +177,16 @@
     return troopTypeSum(input) - TROOP_BASE_SUM;
   }
 
-  /** 未使用 + 追加；兵種等級 +1 → addition +1 → available +1（unused 不變）。 */
+  /**
+   * 未使用點數＝唯一可分配的池子（單一來源）。
+   * 兵種等級的追加點數在升級時就已轉入 unusedPoints，
+   * 因此這裡直接等於 unusedPoints，不再另外相加 additionPoints。
+   */
   function availablePoints(input) {
-    return input.unusedPoints + additionPoints(input);
+    return input.unusedPoints;
   }
 
-  /** 全部點數 = (未使用 + 追加) + 四項能力。 */
+  /** 全部點數 = 未使用（含兵種追加） + 四項能力。 */
   function totalWorkforcePoints(input) {
     return availablePoints(input) + allocatedAttrPoints(input);
   }
@@ -223,17 +231,29 @@
     return adjustUnusedPool(rawInput, field, delta);
   }
 
-  /** 兵種等級獨立調整：不扣 unusedPoints。 */
+  /**
+   * 兵種等級調整：追加點數的增減直接轉入／轉出 unusedPoints。
+   *
+   * 升級（+）：unusedPoints 增加，之後就能拿去點四項能力。
+   * 降級（−）：要把先前追加的點數收回；但已花在能力上的點數不能再退，
+   * 所以降級幅度最多只能到 unusedPoints 歸零為止（例如未使用 0 時降不了級）。
+   */
   function setTroopPoolValue(rawInput, field, nextValue) {
     if (!TROOP_POOL_FIELDS.includes(field)) {
       throw new Error(`setTroopPoolValue: ${field} 不是兵種等級欄位`);
     }
 
     const input = normalizeInput(rawInput);
-    const next = normalizeInteger(nextValue, input[field], FIELD_LIMITS[field]);
+    let next = normalizeInteger(nextValue, input[field], FIELD_LIMITS[field]);
+    if (next < input[field]) {
+      next = Math.max(next, input[field] - input.unusedPoints);
+    }
+
+    const transferred = next - input[field];
     return {
       ...input,
       [field]: next,
+      unusedPoints: input.unusedPoints + transferred,
     };
   }
 
